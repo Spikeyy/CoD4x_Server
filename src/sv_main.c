@@ -4085,6 +4085,13 @@ void SV_BotUserMove(client_t *client)
     {
         ucmd.buttons = g_botai[num].buttons;
 
+        // Force the bot to crouch when mantling. 
+        // Stops the bot from getting stuck when mantling objects without enough room to stand (e.g. windows)
+        if(ps->pm_flags & 4) // PMF_MANTLE
+        {
+            ucmd.buttons |= KEY_MASK_CROUCH;
+        }
+
         /* Apply movement. */
         if (g_botai[num].doMove)
         {
